@@ -75,6 +75,8 @@
 	</dependencies>
 
 	<build>
+		<finalName>toDoApp</finalName>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

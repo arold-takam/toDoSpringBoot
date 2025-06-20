@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: todo-db
+    env: java
+    buildCommand: ./mvnw clean install -DskipTests
+    startCommand: java -jar target/toDoApp.jar
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://takus:l26MlE8KiyWp2iS3rkqYvkWbFpWKhdQg@dpg-d1aobtodl3ps73dt2vog-a/todo_db_nlfu
+      - key: DATABASE_USERNAME
+        value: takus
+      - key: DATABASE_PASSWORD
+        value: takus237
