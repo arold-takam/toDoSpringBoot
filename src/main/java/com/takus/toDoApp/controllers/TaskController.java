@@ -8,12 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(path = "/task")
+// Optionnel : Ajoutez @CrossOrigin pour permettre les requêtes depuis votre frontend si sur un domaine/port différent
+// @CrossOrigin(origins = "http://localhost:3000") // Remplacez 3000 par le port de votre frontend React/Vue/Angular
 public class TaskController {
 	
 	private TaskServices taskServices;
@@ -22,54 +23,71 @@ public class TaskController {
 		this.taskServices = taskServices;
 	}
 	
+//	----------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	@PostMapping(path = "/add", consumes = APPLICATION_JSON_VALUE)
 	public ResponseEntity<Task> add(@RequestBody @Valid Task task){
-		taskServices.addTask(task);
+		Task createdTask = taskServices.addTask(task);
 		
-		return new ResponseEntity<>(task, HttpStatus.CREATED);
+		return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
 	}
 	
 	@GetMapping(path = "/get/{id}", produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<Task> get(@PathVariable int id){
-		Task task = taskServices.getTaskID(id);
-		
-		if (task == null){
+		try {
+			Task task = taskServices.getTaskID(id);
+			return new ResponseEntity<>(task, HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		
-		return new ResponseEntity<>(task, HttpStatus.OK);
 	}
 	
 	@GetMapping(path = "/get", produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Task>> getAllTasks(){
-		if (taskServices.getAllTask().isEmpty()){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		List<Task> taskList = taskServices.getAllTask();
 		
-		return new ResponseEntity<>(taskServices.getAllTask(), HttpStatus.OK);
+		return new ResponseEntity<>(taskList, HttpStatus.OK);
 	}
 	
 	@PutMapping(path = "/update/{id}",  consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<Task> update(@PathVariable int id, @RequestBody @Valid Task newTask){
-		if (newTask == null){
+		try {
+			Task existingTask = taskServices.updateTaskID(id, newTask);
+			return new ResponseEntity<>(existingTask, HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		
-		Task existingTask = taskServices.updateTaskID(id, newTask);
-		
-		return new ResponseEntity<>(existingTask, HttpStatus.OK);
 	}
 	
 	@DeleteMapping(path = "/delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable int id){
-		boolean delete = taskServices.deleteTaskID(id);
-		
-		if (delete){
+		try {
+			boolean deleted = taskServices.deleteTaskID(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}else {
+		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@GetMapping(path = "/get/completed", produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Task>>getCompletedTasks (){
+		List<Task>taskList = taskServices.getCompletedTasks();
+		
+		return new ResponseEntity<>(taskList, HttpStatus.OK);
+	}
+	
+	//      ------------------------------------FILTERING MAPPING---------------------------------------------------------------------
+	@GetMapping(path = "/get/sorted", produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Task>> getAllSortedTasks(){
+		List<Task> taskList = taskServices.getAllSortedTasks();
+		
+		return new ResponseEntity<>(taskList, HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/get/completed/sorted", produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Task>> getCompletedSortedTasks(){
+		List<Task> taskList = taskServices.getCompletedSortedTasks();
+		
+		return new ResponseEntity<>(taskList, HttpStatus.OK);
+	}
 }
-

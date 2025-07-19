@@ -2,7 +2,8 @@ package com.takus.toDoApp.services;
 
 
 import com.takus.toDoApp.models.Task;
-import com.takus.toDoApp.repositotiries.TaskRepository;
+import com.takus.toDoApp.repositories.TaskRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,17 +16,13 @@ public class TaskServices {
 	public TaskServices(TaskRepository taskRepository) {
 		this.taskRepository = taskRepository;
 	}
+
+//      -----------------------------------------------------------------------------------------------------------------
 	
 	
 	public Task addTask(Task task){
 		if (task.getTitle().isBlank() || task.getDetails().isBlank()){
 			throw new IllegalArgumentException("This task is invalid, try again.");
-		}
-		
-		for (Task task1: taskRepository.findAll()){
-			if (task1.getTitle().equals(task.getTitle())){
-				throw new IllegalArgumentException("It already has an existing task with this title.");
-			}
 		}
 		
 		return taskRepository.save(task);
@@ -42,33 +39,21 @@ public class TaskServices {
 	}
 	
 	public List<Task> getAllTask(){
-		List<Task> taskList = taskRepository.findAll();
-		
-		if (taskList.isEmpty()){
-			throw new IllegalArgumentException("No Task existing yet.");
-		}
-		
-		return taskList;
+		return taskRepository.findAll(Sort.by(Sort.Order.asc("id")));
 	}
 	
-	public Task updateTaskID(int id, Task newTask){
-		Optional<Task>optionalTask = taskRepository.findById(id);
+	public Task updateTaskID(int id, Task newTask) {
+		Optional<Task> optionalTask = taskRepository.findById(id);
 		
-		if (optionalTask.isEmpty()){
-			throw new IllegalArgumentException ("No Task found at this ID:  "+id);
+		if (optionalTask.isEmpty()) {
+			throw new IllegalArgumentException("No Task found at this ID: " + id);
 		}
 		
-		if (newTask.getTitle().isBlank() || newTask.getDetails().isBlank()){
+		if (newTask.getTitle().isBlank() || newTask.getDetails().isBlank()) {
 			throw new IllegalArgumentException("This task is invalid, try again.");
 		}
 		
 		Task existingTask = optionalTask.get();
-		
-		for (Task task1: taskRepository.findAll()){
-			if (task1.getTitle().equals(newTask.getTitle())){
-				throw new IllegalArgumentException("It already has an existing task with this title: "+task1.getTitle());
-			}
-		}
 		
 		existingTask.setTitle(newTask.getTitle());
 		existingTask.setDetails(newTask.getDetails());
@@ -89,5 +74,19 @@ public class TaskServices {
 		taskRepository.deleteById(id);
 		
 		return true;
+	}
+	
+	public List<Task>getCompletedTasks(){
+		return taskRepository.findAllByStatusTrue();
+	}
+	
+	//      ------------------------------------------FILTERING LOGIC---------------------------------------------------
+	
+	public List<Task> getAllSortedTasks(){
+		return taskRepository.findAllSortedComplex();
+	}
+	
+	public List<Task> getCompletedSortedTasks(){
+		return taskRepository.findByStatusSortedComplex(true);
 	}
 }

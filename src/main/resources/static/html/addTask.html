@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="UTF-8" />
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <title>ToDo SMART App/Add New Task</title>
+        <link rel="stylesheet" href="../css/addTask.css" />
+  </head>
+  <body>
+    <div class="top">
+      <header>
+        <a href="../index.html" class="logo">ToDo SMART</a>
+        <div class="menu">
+          <span>Menu</span>
+          <button class="btnMenu">
+            <hr />
+          </button>
+        </div>
+        <nav>
+          <ul class="menuList">
+            <li>
+              <a href="#">
+                <p>Menu</p>
+              </a>
+              <img src="../images/menuClose.png" alt="menu image" />
+            </li>
+            <li>
+              <img src="../images/user.png" alt="profile image" />
+              <a href="#">
+                <p>Your Profile</p>
+              </a>
+            </li>
+            <li>
+              <img src="../images/darkMode.png" alt="darkMode image" />
+              <a href="#">
+                <p>Go in Dark Mode</p>
+              </a>
+            </li>
+          </ul>
+          <ul class="settings">
+            <li>
+              <a href="#">
+                <p>Settings</p>
+              </a>
+              <img src="../images/setting.png" alt="settings image" />
+            </li>
+            <li>
+              <img src="../images/lang.png" alt="Language image" />
+              <a href="#">
+                <p>Put it in English</p>
+              </a>
+            </li>
+            <li>
+              <img src="../images/colorPalette.png" alt="Color image" />
+              <a href="#">
+                <p>Change the color</p>
+              </a>
+            </li>
+          </ul>
+          <footer class="footer">
+            <div class="about">
+              <b>ABOUT US</b>
+              <a href="/index.html">ToDo SMART</a>
+              <ul>
+                <li>
+                  <a href="#">Legal information</a>
+                </li>
+                <li>
+                  <a href="#">Privacy Police</a>
+                </li>
+                <li>
+                  <a href="#">FAQS</a>
+                </li>
+              </ul>
+            </div>
+            <div class="contact">
+              <b>CONTACT US: </b>
+              <ul>
+                <li>
+                  <a href="#">
+                    <img src="../images/gmail.png" alt="email image" />
+                    <p>www.Email@gmail.com</p>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img
+                      src="../images/whatsapp.png"
+                      alt="Whatsapp image"
+                    />
+                    <p>+237 676 169 056</p>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img
+                      src="../images/facebook.png"
+                      alt="facebook image"
+                    />
+                    <p>arold takam</p>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img src="../images/youtube.png" alt="youtube image" />
+                    <p>@aroldTakus</p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="more">
+              <b>More on US: </b>
+              <ul>
+                <li>
+                  <a href="#">Services Extra</a>
+                </li>
+                <li>
+                  <a href="#">Services Extra</a>
+                </li>
+                <li>
+                  <a href="#">Services Extra</a>
+                </li>
+              </ul>
+            </div>
+            <div class="copyright">
+              <p>&copy; 2025 ToDo SMART. All rights reserved.</p>
+              <p>Designed by Arold Takus</p>
+            </div>
+          </footer>
+        </nav>
+      </header>
+      <span class="heroText">Your smart task manager here !</span>
+      <div class="search">
+        <input type="search" class="quest" placeholder="Find your task here" />
+        <button type="submit">
+          <img src="../images/search.webp" alt="loop images" />
+        </button>
+      </div>
+    </div>
+    <div class="zone">
+      <div class="errorTracker">
+        <span>
+          <p>
+            Hello dear !
+	          you can add your a new task easily right now and manage your day like a Boss.
+          </p>
+          <button>OK</button>
+        </span>
+      </div>
+      <h1>Add a new task</h1>
+      <form>
+        <input
+          type="text"
+          class="title"
+          placeholder="Enter your task title here"
+         required maxlength="255"/>
+        <textarea
+          name="details"
+          id="details"
+          class="description"
+          cols="30"
+          rows="10"
+          placeholder="Enter your task description"
+         required></textarea>
+        <div class="chrono">
+          <input type="date" name="date" id="date" class="day" />
+          <input type="time" name="time" id="time" class="hour" />
+        </div>
+        <div class="btn">
+          <a href="../index.html" class="backToHome">BACK</a>
+          <button type="submit" class="ok">SUBMIT</button>
+        </div>
+      </form>
+    </div>
+    
+    <script src="../index.js" defer></script>
+    <script src="../js/addingTask.js" defer></script>
+  </body>
+</html>
