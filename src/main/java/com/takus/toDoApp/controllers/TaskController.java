@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
+@CrossOrigin(origins = "https://todo-app-28ry.onrender.com")
 @RestController
 @RequestMapping(path = "/task")
 // Optionnel : Ajoutez @CrossOrigin pour permettre les requêtes depuis votre frontend si sur un domaine/port différent
