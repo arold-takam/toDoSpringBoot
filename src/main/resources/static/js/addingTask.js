@@ -39,11 +39,15 @@ formAdd.addEventListener("submit", (e)=>{
         },1500);
 } );
 
+
+// ---------------------------------------------API CONNECTION----------------------------------------------------
+const API_BASE_URL = 'https://todo-app-28ry.onrender.com';
+
 async function addTask(title, details, status, limitationDate, limitationTime) {
         const taskData = new Task(title, details, status, limitationDate, limitationTime);
 
         try {
-                const response = await fetch('http://localhost:8080/api/task/add', {
+                const response = await fetch(`${API_BASE_URL}/task/add`, {
                         method: 'POST',
                         headers: {
                                 'Content-Type': 'application/json'

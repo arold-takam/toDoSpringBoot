@@ -15,3 +15,4 @@ closeBtn.addEventListener("click", () => {
     menu.style.cursor = "pointer";
 });
 
+
